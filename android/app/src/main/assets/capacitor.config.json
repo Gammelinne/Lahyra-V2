@@ -1,1 +1,6 @@
-{"appId":"com.drinkolo.app","appName":"Drinkolo","bundledWebRuntime":false,"webDir":"dist"}
+{
+	"appId": "com.drinkolo.app",
+	"appName": "Drinkolo",
+	"bundledWebRuntime": false,
+	"webDir": "dist"
+}

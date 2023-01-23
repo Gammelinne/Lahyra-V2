@@ -10,10 +10,8 @@
     "capacitor:serve": "vue-cli-service capacitor:serve"
   },
   "dependencies": {
-    "@capacitor/android": "^2.0.0",
-    "@capacitor/cli": "^2.0.0",
-    "@capacitor/core": "^2.0.0",
-    "@capacitor/ios": "^2.0.0",
+    "@capacitor/android": "^4.6.2",
+    "@capacitor/ios": "^4.6.2",
     "@mdi/font": "5.9.55",
     "core-js": "^3.8.3",
     "register-service-worker": "^1.7.2",
@@ -26,6 +24,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@capacitor/cli": "^4.6.2",
+    "@capacitor/core": "^4.6.2",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
