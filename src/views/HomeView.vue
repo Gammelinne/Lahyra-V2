@@ -1,18 +1,29 @@
 <template>
-  <HelloWorld />
+  <div class="home">
+    <h1>Home</h1>
+    <p>{{ testwebsocket }}</p>
+  </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-
-// Components
-import HelloWorld from '../components/HelloWorld.vue';
-
-export default defineComponent({
-  name: 'HomeView',
-
-  components: {
-    HelloWorld,
+export default {
+  data: function () {
+    return {
+      testwebsocket: "",
+    };
   },
-});
+  created: function () {
+    //   window.Echo.channel('testchannel').listen('a', (e) => {
+    //       console.log(e); // this is the event object from the server. It's can be call whatever you want
+    //         this.testwebsocket = e.message;
+    //   });
+    //listen channel "testchannel" and event name App\Events\Test
+    window.Echo.channel("testchannel").listen("Test", (e) => {
+      console.log(e); // this is the event object from the server. It's can be call whatever you want
+      this.testwebsocket = e.message;
+    });
+  },
+  methods: {
+  },
+};
 </script>
