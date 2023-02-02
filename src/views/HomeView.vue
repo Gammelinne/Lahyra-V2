@@ -13,12 +13,12 @@ export default {
     };
   },
   created: function () {
-    //   window.Echo.channel('testchannel').listen('a', (e) => {
+    //   window.Echo.channel('testchannel').listen('Test', (e) => {
     //       console.log(e); // this is the event object from the server. It's can be call whatever you want
     //         this.testwebsocket = e.message;
     //   });
     //listen channel "testchannel" and event name App\Events\Test
-    window.Echo.channel("testchannel").listen("Test", (e) => {
+    window.Echo.private("message").listen("Message", (e) => {
       console.log(e); // this is the event object from the server. It's can be call whatever you want
       this.testwebsocket = e.message;
     });
