@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    
   </div>
 </template>
 
@@ -9,11 +10,11 @@ export default {
     return {
     };
   },
-  created: function () {
-    window.Echo.private("message").listen("Message", (e) => {
-      console.log(e); 
-    });
-  },
+  // created: function () {
+  //   window.Echo.private("message").listen("Message", (e) => {
+  //     console.log(e); 
+  //   });
+  // },
   methods: {
   },
 };

@@ -1,4 +1,4 @@
-# drinkolo
+# lahyra
 
 ## Project setup
 ```

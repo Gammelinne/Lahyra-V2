@@ -10,7 +10,7 @@ window.Echo = new Echo({
     wsPort: 6001,
     wssPort: 6001,
     forceTLS: false,
-    authEndpoint: 'http://drinkolo-back.test/broadcasting/auth',
+    authEndpoint: 'http://lahyra-back.test/broadcasting/auth',
     auth: {
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),

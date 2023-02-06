@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Drinkolo</string>
-    <string name="title_activity_main">Drinkolo</string>
-    <string name="package_name">com.drinkolo.app</string>
-    <string name="custom_url_scheme">com.drinkolo.app</string>
+    <string name="app_name">lahyra</string>
+    <string name="title_activity_main">lahyra</string>
+    <string name="package_name">com.lahyra.app</string>
+    <string name="custom_url_scheme">com.lahyra.app</string>
 </resources>

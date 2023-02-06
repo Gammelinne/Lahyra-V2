@@ -1,5 +1,5 @@
 {
-  "name": "drinkolo",
+  "name": "lahyra",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@capacitor/android": "^4.6.2",
+    "@capacitor/device": "^4.1.0",
     "@capacitor/ios": "^4.6.2",
     "@mdi/font": "5.9.55",
     "axios": "^1.2.3",
@@ -18,8 +19,9 @@
     "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.3",
-    "vuetify": "^3.0.0-beta.0",
+    "vuetify": "^3.1.3",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
