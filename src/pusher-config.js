@@ -13,7 +13,7 @@ window.Echo = new Echo({
     authEndpoint: 'http://drinkolo-back.test/broadcasting/auth',
     auth: {
         headers: {
-            Authorization: 'Bearer ' + '',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
             Accept: 'application/json'
         }
     }

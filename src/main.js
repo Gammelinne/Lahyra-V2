@@ -5,9 +5,4 @@ import vuetify from './plugins/vuetify'
 import './pusher-config'
 
 
-
-
-//configure axios
-
-
 createApp(App).use(router).use(vuetify).mount('#app')
