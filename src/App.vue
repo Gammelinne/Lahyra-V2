@@ -53,29 +53,30 @@
     </v-main>
 
     <v-footer
+      class="d-flex flex-column"
       color="indigo"
       app
     >
-      <!-- logo of github, linkedin and instagram in center-->
-      <div class="text-center">
+      <div class="d-flex justify-center align-center w-100">
+        <!-- logo of github, linkedin and instagram in center-->
         <v-icon
+          class="mx-2"
           color="white"
-          @click="window.open('github.com/abdelhakimz')"
+          @click="window.open('https://github.com/Gammelinne')"
         >
           mdi-github
         </v-icon>
         <v-icon
+          class="mx-2"
           color="white"
-          @click="window.open('linkedin.com/in/abdelhakimz')"
+          @click="window.open('https://www.linkedin.com/in/kylian-renault/')"
         >
           mdi-linkedin
         </v-icon>
-        <v-icon
-          color="white"
-          @click="window.open('instagram.com/abdelhakimz')"
-        >
-          mdi-instagram
-        </v-icon>
+      </div>
+
+      <div class="px-4 py-2 text-center w-100">
+        {{ new Date().getFullYear() }} — <span>{{$t('App.Footer')}}</span>
       </div>
     </v-footer>
 
