@@ -5,6 +5,19 @@
         "Description": "Lahyra is the place where you can know how much your friends really know you. Every day you can do several challenges and win points. The more you win, the more you can climb the ranking and win rewards!",
         "Login": "Login",
         "Register": "Register",
-        "Logout": "Logout"
+        "Logout": "Logout",
+        "Footer":{
+            "About": "About",
+            "Contact": "Contact",
+            "Terms": "Terms of use",
+            "Privacy": "Privacy policy",
+            "Description" : "By RENAULT Kylian - All rights reserved"
+        },
+        "Drawer" :{
+            "Dashboard" : "Dashboard",
+            "Friends" : "Friends",
+            "Groups" : "Groups",
+            "Settings" : "Settings"
+        } 
     }
 }
