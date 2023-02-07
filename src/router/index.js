@@ -1,18 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SettingView from '../views/SettingView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/settings',
     name: 'settings',
     component: SettingView,
-    meta: { RequiresAuth: true }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+
   }
 ]
 
@@ -22,23 +28,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
-  /* Redirect to login page if not logged in and trying to access a restricted page */
-  if (to.matched.some(record => record.meta.RequiresAuth)) {
-    console.log('requiresAuth');
-    const connectionInfo = localStorage.getItem('user');
-    if (connectionInfo) {
-      next()
-    }
-    else {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    }
-  } else {
+  let connectionInfo = localStorage.getItem('user');
+  if(connectionInfo === null && to.name !== 'login') {
+    next('/login');
+  } else if (connectionInfo !== null && to.name === 'login') {
+    next('/');
+  }else {
     next();
   }
+
 })
 
 export default router

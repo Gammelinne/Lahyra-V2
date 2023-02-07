@@ -1,21 +1,18 @@
 <template>
-  <div class="home">
-    
-  </div>
+  bob
 </template>
 
 <script>
 export default {
+  components: {},
   data: function () {
-    return {
-    };
+    return {};
   },
   // created: function () {
   //   window.Echo.private("message").listen("Message", (e) => {
-  //     console.log(e); 
+  //     console.log(e);
   //   });
   // },
-  methods: {
-  },
+  methods: {},
 };
 </script>

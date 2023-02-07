@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-Axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+Axios.defaults.baseURL = "http://drinkolo-back.test/api/"
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const setAuthorizationHeader = () => {

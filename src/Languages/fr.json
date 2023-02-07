@@ -3,7 +3,6 @@
         "Title": "Lahyra",
         "slogan" : "Apprends à connaître tes amis",
         "Description": "Lahyra c'est l'endroit où tu pourras savoir à quel point tes amis te connaissent vraiment. Chaque jour tu pourras réaliser plusieurs défis et gagner des points. Plus tu en gagnes, plus tu pourras monter dans le classement et gagner des récompenses !",
-        "Login": "Se connecter",
         "Register": "S'inscrire",
         "Logout": "Se déconnecter",
         "Footer":{
@@ -18,6 +17,15 @@
             "Friends" : "Amis",
             "Groups" : "Groupes",
             "Settings" : "Paramètres"
-        } 
+        } ,
+        "Login": {
+            "Title": "Bon retour parmi nous !",
+            "Email": "Email",
+            "Emailinvalid": "Email invalide",
+            "Password": "Mot de passe",
+            "Submit": "Se connecter",
+            "Forgot": "Mot de passe oublié ?",
+            "Register": "Any account ? Register now !"
+        }
     }
 }
