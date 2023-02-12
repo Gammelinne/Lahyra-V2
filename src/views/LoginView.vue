@@ -11,6 +11,15 @@
       {{ $t("App.Login.Title") }}
     </v-card-title>
     <v-card-text>
+      <v-alert
+        class="my-2"
+        variant="outlined"
+        closable
+        v-if="error"
+        color="error"
+        :title="$t('App.Login.Invalid')"
+      >
+      </v-alert>
       <v-form
         v-model="valid"
         ref="form"
@@ -18,13 +27,11 @@
       >
         <v-text-field
           v-model="email"
-          :rules="emailRules"
           :label="$t('App.Login.Email')"
           required
         ></v-text-field>
         <v-text-field
           v-model="password"
-          :rules="passwordRules"
           :label="$t('App.Login.Password')"
           type="password"
           required
@@ -55,17 +62,10 @@ export default {
   name: "LoginView",
   data: function () {
     return {
+      error: false,
       email: "",
       password: "",
       valid: true,
-      emailRules: [
-        (v) => !!v || this.$t("App.Login.EmailRequired"),
-        (v) => /.+@.+\..+/.test(v) || this.$t("App.Login.EmailInvalid"),
-      ],
-      passwordRules: [
-        (v) => !!v || this.$t("App.Login.PasswordRequired"),
-        (v) => v.length >= 8 || this.$t("App.Login.PasswordLength"),
-      ],
     };
   },
   created: function () {
@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     login: function () {
+      this.error = false;
       Axios.post("/login", {
         email: this.email,
         password: this.password,
@@ -90,7 +91,9 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response.status === 401 || error.response.status === 422) {
+            this.error = true;
+          }
         });
     },
   },

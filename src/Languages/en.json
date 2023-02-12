@@ -19,13 +19,24 @@
             "Settings": "Settings"
         },
         "Login": {
+            "Invalid": "Invalid email or password",
             "Title": "Welcome back to Lahyra !",
             "Email": "Email",
-            "Emailinvalid": "Invalid email",
+            "EmailInvalid": "Invalid email",
+            "EmailRequired": "Email is required",
             "Password": "Password",
+            "PasswordRequired": "Password is required",
+            "PasswordRule": "password must be at least 8 characters long, contain at least one number, one uppercase and one lowercase letter, and one special character",
             "Submit": "Login",
             "Forgot": "Forgot your password ?",
             "Register": "Any account ? Register now !"
+        },
+        "BottomNav" : {
+            "Home": "Home",
+            "Search": "Search",
+            "Add": "Add",
+            "Notifications": "Notifications",
+            "Profile": "Profile"
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  bob
+bob
 </template>
 
 <script>

@@ -19,13 +19,23 @@
             "Settings" : "Paramètres"
         } ,
         "Login": {
+            "Invalid": "Email ou mot de passe invalide",
             "Title": "Bon retour parmi nous !",
             "Email": "Email",
-            "Emailinvalid": "Email invalide",
+            "EmailInvalid": "Email invalide",
+            "EmailRequired": "Email requis",
             "Password": "Mot de passe",
+            "PasswordRule": "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial",
             "Submit": "Se connecter",
             "Forgot": "Mot de passe oublié ?",
             "Register": "Any account ? Register now !"
+        },
+        "BottomNav": {
+            "Home": "Accueil",
+            "Search": "Rechercher",
+            "Add": "Ajouter",
+            "Notifications": "Notifications",
+            "Profile": "Profil"
         }
     }
 }
