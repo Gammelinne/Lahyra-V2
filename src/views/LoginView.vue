@@ -5,7 +5,7 @@
     :theme="this.$root.$data.is_light ? 'light' : 'dark'"
     class="mx-auto"
     max-width="400"
-    style="margin-top: 100px;"
+    :style="this.$root.$data.is_mobile ? 'margin-top: 20px;' : 'margin-top: 100px;'"
   >
     <v-card-title class="text-h5">
       {{ $t("App.Login.Title") }}

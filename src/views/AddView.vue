@@ -1,9 +1,9 @@
 <template>
   <div class="add">
-    <!-- add post with image / text  and tags -->
+    <!-- center card -->
     <v-card
-      class="mx-auto"
       max-width="600"
+      class="mx-auto mt-5"
     >
       <v-card-title>
         <span class="headline">{{ $t("App.Add.Title") }}</span>
@@ -20,26 +20,25 @@
             :label="$t('App.Add.Content')"
             required
           ></v-textarea>
-          <!-- image upload push to array -->
           <v-file-input
-            v-model="image"
+            counter
+            v-model="post.images"
             :label="$t('App.Add.Image')"
             multiple
             accept="image/*"
             prepend-icon="mdi-camera"
-            @change="addImage"
-          ></v-file-input>
+            @click="checkPermission()"
+            @change="addImage()"
+          >
+          </v-file-input>
           <v-carousel
-            v-if="imageUpload.length > 0"
-            cycle
+            v-if="post.images.length > 0"
             height="200"
-            hide-delimiters
-            show-arrows-on-hover
           >
             <v-carousel-item
-              v-for="(item, i) in imageUpload"
+              v-for="(item, i) in post.images"
               :key="i"
-              :src="item"
+              :src="getPreviewImage(i)"
             >
               <v-icon
                 color="white"
@@ -62,43 +61,69 @@
 </template>
 
 <script>
-import Axios from "../axios";
+//import Axios from "../axios";
+
 export default {
   data: function () {
     return {
-      image: [],
       post: {
         title: "",
         content: "",
         images: [],
         tags: "",
       },
-      imageUpload: [],
+      previewImage: [],
+      permission: true,
     };
   },
   methods: {
     addImage: function () {
-      this.post.images = [...this.image, ...this.post.images];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imageUpload.push(e.target.result);
-      };
-      reader.readAsDataURL(this.image[0]);
-      console.log(this.post.images);
+      //check if there are more than 5 images
+      if (this.post.images.length > 5) {
+        //alert user with $t("App.Add.ImageLimit")
+        alert(this.$t("App.Add.ImageLimit"));
+        this.post.images = [];
+        this.previewImage = [];
+      }
+      if (!this.permission) {
+        alert(this.$t("App.Add.Permission"));
+      }
     },
-    addPost: function () {
-      Axios.post("/post", this.post)
-        .then((response) => {
-          console.log(response);
-          this.$router.push({ name: "Home" });
-        })
-        .catch((error) => {
-          console.log(error);
+    checkPermission() {
+      if (this.$capacitor.isNativePlatform()) {
+        this.$capacitor_camera.requestPermission();
+
+        this.$capacitor_camera.getPermission().then((result) => {
+          if (result.camera === "granted" && result.photos === "granted") {
+            this.$capacitor_camera
+              .getPhoto({
+                quality: 90,
+                allowEditing: false,
+                resultType: this.$capacitor_camera.ResultType.Base64,
+                source: this.$capacitor_camera.PictureSourceType.Camera,
+                saveToGallery: true,
+              })
+              .then((image) => {
+                this.post.images.push(image.base64String);
+              });
+          } else {
+            this.permission = false;
+          }
         });
+      }
     },
-    deleteImage: function (index) {
-      this.imageUpload.splice(index, 1);
-      this.post.images.splice(index, 1);
+    getPreviewImage: function (image) {
+      const reader = new FileReader();
+      //return src of this image index
+      reader.readAsDataURL(this.post.images[image]);
+      reader.onload = (e) => {
+        this.previewImage[image] = e.target.result;
+      };
+      return this.previewImage[image];
+    },
+    deleteImage: function (image) {
+      this.post.images.splice(image, 1);
+      this.previewImage.splice(image, 1);
     },
   },
 };

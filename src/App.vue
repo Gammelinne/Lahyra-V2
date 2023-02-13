@@ -1,11 +1,9 @@
 <template id="app">
-  <v-app
-    v-if="is_Logged"
-    :theme="is_light ? 'white' : 'dark'"
+  <v-app v-if="is_Logged"
+  :theme="is_light ? 'light' : 'dark'"
   >
     <v-app-bar
       app
-      :color="is_light ? 'white' : 'dark'"
       :title="$t('App.Title')"
     >
       <!-- add at the middle of the app bar a progress bar and badge with level user.exp and user.level -->
@@ -180,14 +178,22 @@
 
   <v-app
     v-else
-    :theme="is_light ? 'white' : 'dark'"
+    :theme="is_light ? 'light' : 'dark'"
   >
     <v-app-bar
       app
-      :color="is_light ? 'indigo' : 'dark'"
       :title="$t('App.Title')"
     >
       <v-spacer></v-spacer>
+      <!-- login button -->
+      <v-btn
+        v-if="$route.path !== '/login'"
+        prepend-icon="mdi-login"
+        to="/login"
+        rounded="pill"
+      >
+        <span>{{$t('App.Login')}}</span>
+      </v-btn>
       <!-- light/dark mode button -->
       <v-btn
         :icon="is_light ? 'mdi-brightness-7' : 'mdi-brightness-4'"
@@ -205,17 +211,12 @@
 
     <v-main>
       <router-view />
-    </v-main>
-
-    <v-footer
-      app
-      :color="is_light ? 'indigo' : 'dark'"
-    >
-      <!-- align center -->
-      <div class="d-flex justify-center align-center w-100">
-        <!-- logo of github, linkedin and instagram in center-->
+      <div class="px-4 py-2 text-center w-100">
+        <span>{{$t('App.Footer.Description')}} — {{$t('App.Title')}} &copy; {{ new Date().getFullYear() }}</span>
+      </div>
+      <div class="px-4 py-2 text-center w-100">
         <v-btn
-          :color="is_light ? 'black' : 'white'"
+
           class="mx-2"
           prepend-icon="mdi-github"
           href='https://github.com/Gammelinne'
@@ -224,32 +225,31 @@
           Github
         </v-btn>
         <v-btn
-          :color="is_light ? 'black' : 'white'"
+
           class="mx-2"
           prepend-icon="mdi-linkedin"
           href="https://www.linkedin.com/in/kylian-renault/"
           target="_blank"
         >Linkedin</v-btn>
       </div>
-      <div class="d-flex justify-center align-center w-100 my-2">
-        <router-link
-          to="/about"
-          class="mx-2"
-        >{{ $t('App.Footer.About') }}</router-link>
-        <router-link
-          to="/contact"
-          class="mx-2"
-        >{{ $t('App.Footer.Contact') }}</router-link>
-        <router-link
-          to="/legal"
-          class="mx-2"
-        >{{ $t('App.Footer.Legal') }}</router-link>
-      </div>
-      <div class="px-4 py-2 text-center w-100">
-        <span>{{$t('App.Footer.Description')}} — {{$t('App.Title')}} &copy; {{ new Date().getFullYear() }}</span>
-      </div>
 
-    </v-footer>
+    </v-main>
+
+    <v-bottom-navigation app>
+      <v-btn
+        to="/about"
+        class="mx-2"
+      >{{ $t('App.Footer.About') }}</v-btn>
+      <v-btn
+        to="/contact"
+        class="mx-2"
+      >{{ $t('App.Footer.Contact') }}</v-btn>
+      <v-btn
+        to="/legal"
+        class="mx-2"
+      >{{ $t('App.Footer.Legal') }}</v-btn>
+
+    </v-bottom-navigation>
 
   </v-app>
 
@@ -315,16 +315,20 @@ export default {
         localStorage.setItem("theme", this.is_light ? "light" : "dark");
       }
     },
-    openNotification(notification){
+    openNotification(notification) {
       //delete notification on API
-      Axios.delete(`/notifications/${notification.id}`).then(() => {
-        //delete notification on local
-        this.user.notifications = this.user.notifications.filter((n) => n.id !== notification.id);
-        //redirect to notification link
-        this.$router.push(notification.link);
-      }).catch((error) => {
-        console.log(error);
-      });
+      Axios.delete(`/notifications/${notification.id}`)
+        .then(() => {
+          //delete notification on local
+          this.user.notifications = this.user.notifications.filter(
+            (n) => n.id !== notification.id
+          );
+          //redirect to notification link
+          this.$router.push(notification.link);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     logout() {
       if (localStorage.removeItem("user") !== null) {
@@ -351,7 +355,4 @@ export default {
 </script>
 
 <style scoped>
-.v-btn:hover {
-  background-color: #f44336 !important;
-}
 </style>
