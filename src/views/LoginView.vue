@@ -57,7 +57,7 @@
 
 
 <script>
-import Axios from "../axios";
+import Axios, { setAuthorizationHeader } from "../axios";
 export default {
   name: "LoginView",
   data: function () {
@@ -80,14 +80,13 @@ export default {
         email: this.email,
         password: this.password,
       })
-        .then((response) => {
+        .then(async (response) => {
           if (response.status === 200) {
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            Axios.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${response.data.user.access_token}`;
             this.$root.$data.is_Logged = true;
-            this.$router.push("/");
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            //set Authorization header in axios
+            setAuthorizationHeader();
+            await this.$router.push("/");
           }
         })
         .catch((error) => {

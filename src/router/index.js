@@ -57,11 +57,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let connectionInfo = localStorage.getItem('user');
+  if (connectionInfo != null) {
+    window.connectionInfo = JSON.parse(connectionInfo);
+  }
   if (to.matched.some(record => record.meta.RequiresAuth)) {
     if (connectionInfo == null) {
       next({
         path: '/login',
-        params: { nextUrl: to.fullPath }
       })
     } else {
       next()

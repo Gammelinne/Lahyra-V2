@@ -1,6 +1,7 @@
 <template id="app">
-  <v-app v-if="is_Logged"
-  :theme="is_light ? 'light' : 'dark'"
+  <v-app
+    v-if="is_Logged"
+    :theme="is_light ? 'light' : 'dark'"
   >
     <v-app-bar
       app
@@ -48,11 +49,9 @@
                   </v-col>
                   <!--retour a la ligne de la notification si trop longue -->
                   <v-col cols="9">
-                    <v-list-item-content>
-                      <v-list-item-title v-html="item.message"></v-list-item-title>
-                      <v-list-item-subtitle>{{item.date}}</v-list-item-subtitle>
-                      <!-- button to item.link and button to delete notification -->
-                    </v-list-item-content>
+                    <v-list-item-title v-html="item.message"></v-list-item-title>
+                    <v-list-item-subtitle>{{item.date}}</v-list-item-subtitle>
+                    <!-- button to item.link and button to delete notification -->
                   </v-col>
                   <v-col cols="2">
                     <v-btn
@@ -114,6 +113,14 @@
         prepend-icon="mdi-translate"
       >
         {{language === 'en' ? 'Français' : 'English'}}
+      </v-btn>
+      <!-- Theme -->
+      <v-btn
+        block
+        @click="changeTheme()"
+        prepend-icon="mdi-palette"
+      >
+        {{is_light ? 'Dark' : 'Light'}}
       </v-btn>
     </v-navigation-drawer>
     <v-main>
@@ -216,7 +223,6 @@
       </div>
       <div class="px-4 py-2 text-center w-100">
         <v-btn
-
           class="mx-2"
           prepend-icon="mdi-github"
           href='https://github.com/Gammelinne'
@@ -225,7 +231,6 @@
           Github
         </v-btn>
         <v-btn
-
           class="mx-2"
           prepend-icon="mdi-linkedin"
           href="https://www.linkedin.com/in/kylian-renault/"

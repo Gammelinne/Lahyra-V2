@@ -6,7 +6,7 @@ Axios.defaults.headers.post['Content-Type'] = 'application/json';
 export const setAuthorizationHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-        Axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+        Axios.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
         return true;
     } else {
         delete Axios.defaults.headers.common['Authorization'];
