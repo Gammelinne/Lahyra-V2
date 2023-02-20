@@ -1,14 +1,14 @@
 <template>
   <!-- title -->
   <div class="text-center">
-    <h1 class="display-1">{{ $t("App.Home.Title") }}</h1>
+    <h1 class="my-2">{{ $t("App.Home.Title") }}</h1>
   </div>
   <div v-if="Posts.length > 0">
     <v-card
       v-for="(post, i) in Posts"
       :key="i"
       class="mx-5 my-5"
-      outlined
+      variant="outlined"
     >
       <v-card-title>
         <!-- avatar and username inlined -->
@@ -72,8 +72,11 @@
       </v-card-title>
       <v-card-text>
         <!-- post title -->
-        <h2 class="headline">{{ post.title }}</h2>
-        <div v-html="post.body"></div>
+        <h2 class="headline my-3">{{ post.title }}</h2>
+        <div
+          class="my-3 text-justify"
+          v-html="post.body"
+        ></div>
         <v-carousel
           v-if="post.images.length > 0"
           height="200"
@@ -82,7 +85,8 @@
             v-for="(item, i) in post.images"
             :key="i"
             :src="item.image"
-          ></v-carousel-item>
+          >
+          </v-carousel-item>
         </v-carousel>
       </v-card-text>
       <!-- att the right bottom -->
@@ -94,6 +98,7 @@
         </div>
         <v-spacer></v-spacer>
         <v-btn
+          :disabled="waitingLike[post.id]"
           @click="post.is_like ? dislikePost(post.id) : likePost(post.id)"
           icon
         >
@@ -122,24 +127,33 @@
       <div v-if="commentsAccess[post.id]">
         <v-divider></v-divider>
         <v-card-text>
-          <v-list>
-            <v-list-item
-              v-for="(comment, i) in post.comments"
-              :key="i"
-            >
-              <v-list-item-title>
-                <!-- show user.username+ avatar -->
-                <v-avatar
-                  size="30"
-                  class="mr-3"
-                >
-                  <img :src="comment.user.avatar">
-                </v-avatar>
-                <span>{{ comment.user.username }}</span>
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ comment.commentary }}
-              </v-list-item-subtitle>
+          <v-card
+            v-for="(comment, i) in post.comments"
+            :key="i"
+            class="my-2"
+            variant="outlined"
+          >
+            <v-card-title>
+              <!-- show user.username+ avatar -->
+              <v-avatar
+                size="30"
+                class="mr-3"
+              >
+                <img :src="comment.user.avatar">
+              </v-avatar>
+              <span>{{ comment.user.username }}</span>
+            </v-card-title>
+            <!-- auto return line -->
+            <v-card-text>
+              <div
+                class="text-justify my-2"
+                v-html="comment.commentary"
+              ></div>
+              <!-- created at -->
+              <div class="mx-auto">
+                <v-icon>mdi-clock</v-icon>
+                <span>{{ comment.created_at }}</span>
+              </div>
               <!-- response  TODO 
               <v-list-item-action>
                 <v-btn
@@ -149,32 +163,28 @@
                   <v-icon>mdi-reply</v-icon>
                 </v-btn>
               </v-list-item-action>-->
-            </v-list-item>
-          </v-list>
+            </v-card-text>
+          </v-card>
 
           <!-- add comment -->
-          <v-row>
-
-            <v-col cols="9">
-              <v-textarea
-                v-model="addComment[post.id]"
-                :prepend-icon="addComment[post.id] ? 'mdi-comment-text' : 'mdi-comment-text-outline'"
-                :label="$t('App.Home.AddComment')"
-                outlined
-                rows="1"
-              > </v-textarea>
-            </v-col>
-            <v-col>
+          <v-text-field
+            v-model="addComment[post.id]"
+            :prepend-icon="addComment[post.id] ? 'mdi-comment-text' : 'mdi-comment-text-outline'"
+            :label="$t('App.Home.AddComment')"
+            :counter="500"
+            variant="outlined"
+            clearable
+          >
+            <template v-slot:append>
               <v-btn
                 @click="addCommentToPost(post.id)"
-                :prepend-icon="addComment[post.id] ? 'mdi-send' : 'mdi-send-lock'"
                 :disabled="!addComment[post.id]"
+                icon
               >
-                {{ $t("App.Home.Send") }}
-
+                <v-icon>{{ addComment[post.id] ? 'mdi-send' : 'mdi-send-lock' }}</v-icon>
               </v-btn>
-            </v-col>
-          </v-row>
+            </template>
+          </v-text-field>
         </v-card-text>
       </div>
     </v-card>
@@ -183,7 +193,7 @@
       v-if="pagination.totalPage > 1 && pagination.totalPage != null"
       v-model="pagination.currentPage"
       :length="pagination.totalPage"
-      :total-visible="pagination.perPage"
+      :total-visible="4"
       rounded="circle"
       @next="getPosts"
       @prev="getPosts"
@@ -220,6 +230,7 @@ export default {
   components: {},
   data: function () {
     return {
+      waitingLike: {},
       addComment: {},
       commentsAccess: {},
       Posts: {},
@@ -230,7 +241,7 @@ export default {
       },
     };
   },
-  created: function () {
+  created: function () {110
     window.Echo.private("message").listen("Message", (e) => {
       if (e.data.comment) {
         Object.entries(this.Posts).forEach(([key, value]) => {
@@ -278,6 +289,7 @@ export default {
         });
     },
     likePost: function (id) {
+      this.waitingLike[id] = true;
       Axios.post("/post/" + id + "/like")
         .then(() => {
           Object.entries(this.Posts).forEach(([key, value]) => {
@@ -286,11 +298,15 @@ export default {
             }
           });
         })
+        .finally(() => {
+          this.waitingLike[id] = false;
+        })
         .catch((error) => {
           console.log(error);
         });
     },
     dislikePost: function (id) {
+      this.waitingLike[id] = true;
       Axios.post("/post/" + id + "/dislike")
         .then(() => {
           Object.entries(this.Posts).forEach(([key, value]) => {
@@ -298,6 +314,9 @@ export default {
               this.Posts[key].is_like = false;
             }
           });
+        })
+        .finally(() => {
+          this.waitingLike[id] = false;
         })
         .catch((error) => {
           console.log(error);

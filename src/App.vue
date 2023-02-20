@@ -278,29 +278,6 @@ export default {
         pseudo: "Gameline",
         email: "gameline@lahyra.com",
         avatar: "https://avatars.githubusercontent.com/u/56442535?v=4",
-        level: 5,
-        exp: 20,
-        new_notifications: 10,
-        notifications: [
-          {
-            id: 1,
-            message: "Vous avez gagné 10 points d'expérience",
-            link: "/post/1",
-            date: "2021-05-01",
-          },
-          {
-            id: 2,
-            message: "Vous avez gagné 10 points d'expérience",
-            link: "/post/2",
-            date: "2021-05-01",
-          },
-          {
-            id: 3,
-            message: "Vous avez gagné 10 points d'expérience",
-            link: "/post/3",
-            date: "2021-05-01",
-          },
-        ],
       },
     };
   },

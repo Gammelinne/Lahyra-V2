@@ -48,7 +48,9 @@
     </v-card-actions>
     <div class="mx-auto">
       <v-divider></v-divider>
-      <v-btn block>
+      <v-btn 
+      to="/Register"
+      block>
         {{ $t("App.Login.Register") }}
       </v-btn>
     </div>
@@ -58,6 +60,7 @@
 
 <script>
 import Axios, { setAuthorizationHeader } from "../axios";
+import { registerWebSocket } from "../pusher-config";
 export default {
   name: "LoginView",
   data: function () {
@@ -85,6 +88,7 @@ export default {
             this.$root.$data.is_Logged = true;
             localStorage.setItem("user", JSON.stringify(response.data.user));
             //set Authorization header in axios
+            registerWebSocket()
             setAuthorizationHeader();
             await this.$router.push("/");
           }

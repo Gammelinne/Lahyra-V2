@@ -1,6 +1,12 @@
 <template>
   <div class="add">
-    <!-- center card -->
+    <!-- snackbar -->
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="3000"
+      :top="true"
+      color="error"
+    >{{ snackbarText }}</v-snackbar>
     <v-card
       max-width="600"
       class="mx-auto mt-5"
@@ -13,24 +19,33 @@
           <v-text-field
             v-model="post.title"
             :label="$t('App.Add.Title')"
-            required
+            variant="outlined"
+            :counter="100"
+            :color="post.title.length > 100 ? 'error' : 'primary'"
+            :rules="[(v) => !!v || $t('App.Add.TitleRequired'),
+            (v) => v.length <= 100 || $t('App.Add.TitleLimit')]"
           ></v-text-field>
           <v-textarea
-            v-model="post.content"
-            :label="$t('App.Add.Content')"
-            required
+            v-model="post.body"
+            :label="$t('App.Add.body')"
+            variant="outlined"
+            :counter="1500"
+            :color="post.body.length > 1500 ? 'error' : 'primary'"
+            :rules="[(v) => !!v || $t('App.Add.TitleRequired'),
+            (v) => v.length <= 1500 || $t('App.Add.TitleLimit')]"
           ></v-textarea>
+          <!-- file explorer only if permission is true -->
           <v-file-input
             counter
             v-model="post.images"
             :label="$t('App.Add.Image')"
             multiple
+            variant="outlined"
             accept="image/*"
             prepend-icon="mdi-camera"
-            @click="checkPermission()"
-            @change="addImage()"
-          >
-          </v-file-input>
+            @click="checkPermission"
+          ></v-file-input>
+          <!-- if permission is false -->
           <v-carousel
             v-if="post.images.length > 0"
             height="200"
@@ -61,38 +76,34 @@
 </template>
 
 <script>
-//import Axios from "../axios";
+import Axios from "../axios";
 
 export default {
   data: function () {
     return {
       post: {
         title: "",
-        content: "",
+        body: "",
         images: [],
-        tags: "",
       },
       previewImage: [],
-      permission: true,
+      snackbar: false,
+      snackbarText: "",
     };
   },
+  created() {},
   methods: {
     addImage: function () {
-      //check if there are more than 5 images
       if (this.post.images.length > 5) {
-        //alert user with $t("App.Add.ImageLimit")
         alert(this.$t("App.Add.ImageLimit"));
         this.post.images = [];
         this.previewImage = [];
       }
-      if (!this.permission) {
-        alert(this.$t("App.Add.Permission"));
-      }
     },
-    checkPermission() {
+    //event checkPermission
+    checkPermission: function (event) {
       if (this.$capacitor.isNativePlatform()) {
         this.$capacitor_camera.requestPermission();
-
         this.$capacitor_camera.getPermission().then((result) => {
           if (result.camera === "granted" && result.photos === "granted") {
             this.$capacitor_camera
@@ -105,11 +116,16 @@ export default {
               })
               .then((image) => {
                 this.post.images.push(image.base64String);
+                this.addImage();
               });
           } else {
-            this.permission = false;
+            this.snackbar = true;
+            this.snackbarText = this.$t("App.Add.Permission");
+            event.preventDefault();
           }
         });
+      } else {
+        this.addImage();
       }
     },
     getPreviewImage: function (image) {
@@ -124,6 +140,19 @@ export default {
     deleteImage: function (image) {
       this.post.images.splice(image, 1);
       this.previewImage.splice(image, 1);
+    },
+    addPost: function () {
+      Axios.post("/post", {
+        title: this.post.title,
+        body: this.post.body,
+        images: this.previewImage,
+      })
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
