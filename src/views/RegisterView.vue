@@ -50,8 +50,7 @@
     </v-card-actions>
     <div class="mx-auto">
       <v-divider></v-divider>
-      <router-link to="/login">
-        <v-btn block>
+      <router-link to="/login">        <v-btn block>
           {{ $t("App.Register.Login") }}
         </v-btn>
       </router-link>
