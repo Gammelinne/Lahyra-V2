@@ -12,7 +12,7 @@ export const registerWebSocket = () => {
         wssPort: 6001,
         forceTLS: false,
         //authEndpoint: 'http://192.168.1.27:80/broadcasting/auth', home
-        authEndpoint: 'http://192.168.203.114:80/broadcasting/auth', //stage
+        authEndpoint: 'http://192.168.23.114:80/broadcasting/auth', //stage
         auth: {
             headers: {
                 Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).access_token || null,

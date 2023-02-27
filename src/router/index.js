@@ -6,6 +6,7 @@ import ProfilView from '../views/ProfilView.vue'
 import AddView from '../views/AddView.vue'
 import ActivityView from '../views/ActivityView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import ProfilReadView from '../views/ProfilReadView.vue'
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     name: 'activity',
     component: ActivityView,
     meta: { RequiresAuth: true }
+  },
+  {
+    path: '/profil/:id',
+    name: 'profilRead',
+    component: ProfilReadView,
   },
 
 ]

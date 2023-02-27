@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 //Axios.defaults.baseURL = "http://192.168.1.27/api/" // home
-Axios.defaults.baseURL = "http://192.168.203.114/api/" // stage
+Axios.defaults.baseURL = "http://192.168.23.114/api/" // stage
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const setAuthorizationHeader = () => {

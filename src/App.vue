@@ -14,7 +14,7 @@
       </v-row>
       <v-spacer></v-spacer>
       <!-- notification button to open modal -->
-      <v-btn
+     <!-- <v-btn
         @click="openModal('notifications')"
         rounded="pill"
       >
@@ -25,8 +25,9 @@
         >
           <v-icon>mdi-bell</v-icon>
         </v-badge>
-      </v-btn>
-      <v-dialog
+      </v-btn> -->
+      <!-- modal to show notifications -->
+      <!--<v-dialog
         v-model="dialog"
         :max-width="$root.$data.is_mobile ? '100%' : '500px'"
         scrollable
@@ -47,11 +48,12 @@
                       <v-img :src="item.image"></v-img>
                     </v-avatar>
                   </v-col>
-                  <!--retour a la ligne de la notification si trop longue -->
                   <v-col cols="9">
-                    <v-list-item-title v-html="item.message"></v-list-item-title>
+                    <v-list-item-title>
+                      {{item.message}}
+                    </v-list-item-title>
                     <v-list-item-subtitle>{{item.date}}</v-list-item-subtitle>
-                    <!-- button to item.link and button to delete notification -->
+
                   </v-col>
                   <v-col cols="2">
                     <v-btn
@@ -64,7 +66,6 @@
                   </v-col>
                 </v-row>
               </v-list-item>
-              <!-- delete all notifications -->
             </v-list>
           </v-card-text>
           <v-card-actions>
@@ -84,7 +85,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
 
       <!-- logout button -->
       <v-btn

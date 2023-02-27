@@ -49,9 +49,12 @@
             <v-card-text>
               {{ user.email }}
             </v-card-text>
+            {{user.username}}
             <v-card-actions>
-              <v-btn @click="follow(user)">
-                Follow
+              <v-btn 
+                @click="viewProfil(user.username)"
+              >
+                {{ $t("App.Search.ViewProfil") }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -296,6 +299,9 @@ export default {
       this.searchUsers();
       this.searchPosts();
     },
+    viewProfil(username) {
+      this.$router.push("/profil/" + username);
+    },
     searchPosts() {
       this.Posts = [];
       Axios.get("/post/post/search" + "?page=" + this.pagePost, {
@@ -322,18 +328,6 @@ export default {
           this.users = response.data.data;
           this.lastPageUser = response.data.meta.last_page;
           window.scrollTo(0, 0);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    follow(user) {
-      Axios.post("/follow", {
-        user_id: user.id,
-      })
-        .then((response) => {
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
