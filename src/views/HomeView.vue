@@ -24,9 +24,9 @@
           </v-avatar>
           <span class="headline">
             <router-link :to="'/profil/' + post.user.username">
-            {{ post.user.name }}
+              {{ post.user.name }}
             </router-link>
-            </span>
+          </span>
           <v-spacer></v-spacer>
           <!-- dropdown menu -->
           <v-menu
@@ -245,31 +245,35 @@ export default {
       },
     };
   },
-  created: function () {110
-    window.Echo.private("message").listen("Message", (e) => {
-      if (e.data.comment) {
-        Object.entries(this.Posts).forEach(([key, value]) => {
-          if (value.id == e.data.comment.post_id) {
-            this.Posts[key].comments.push(e.data.comment);
-            this.Posts[key].comments_count += 1;
-          }
-        });
-      }
-      if (e.data.like) {
-        Object.entries(this.Posts).forEach(([key, value]) => {
-          if (value.id == e.data.like.post_id) {
-            this.Posts[key].likes_count += 1;
-          }
-        });
-      }
-      if (e.data.dislike) {
-        Object.entries(this.Posts).forEach(([key, value]) => {
-          if (value.id == e.data.dislike.post_id) {
-            this.Posts[key].likes_count -= 1;
-          }
-        });
-      }
-    });
+  created: function () {
+    try {
+      window.Echo.private("message").listen("Message", (e) => {
+        if (e.data.comment) {
+          Object.entries(this.Posts).forEach(([key, value]) => {
+            if (value.id == e.data.comment.post_id) {
+              this.Posts[key].comments.push(e.data.comment);
+              this.Posts[key].comments_count += 1;
+            }
+          });
+        }
+        if (e.data.like) {
+          Object.entries(this.Posts).forEach(([key, value]) => {
+            if (value.id == e.data.like.post_id) {
+              this.Posts[key].likes_count += 1;
+            }
+          });
+        }
+        if (e.data.dislike) {
+          Object.entries(this.Posts).forEach(([key, value]) => {
+            if (value.id == e.data.dislike.post_id) {
+              this.Posts[key].likes_count -= 1;
+            }
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
     this.getPosts();
   },
   methods: {

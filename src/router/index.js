@@ -63,12 +63,12 @@ const router = createRouter({
 import { registerWebSocket } from "../pusher-config";
 router.beforeEach((to, from, next) => {
   let connectionInfo = localStorage.getItem('user');
-  if (connectionInfo != null) {
+  if (connectionInfo !== 'undefined') {
     registerWebSocket();
     window.connectionInfo = JSON.parse(connectionInfo);
   }
   if (to.matched.some(record => record.meta.RequiresAuth)) {
-    if (connectionInfo == null) {
+    if (connectionInfo == 'undefined' || connectionInfo == null) {
       next({
         path: '/login',
       })
