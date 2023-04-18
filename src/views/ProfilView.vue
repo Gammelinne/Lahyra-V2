@@ -195,6 +195,7 @@
                       >
                         {{ $t("App.Profil.DeletePost") }}
                       </v-btn>
+                      <!--
                       <v-btn
                         @click="openPost(post.id)"
                         prepend-icon="mdi-eye"
@@ -202,6 +203,7 @@
                       >
                         {{ $t("App.Profil.ShowPost") }}
                       </v-btn>
+                      -->
                     </v-card-actions>
                   </v-card>
                 </v-card>
@@ -355,7 +357,7 @@
                         </v-row>
                         <v-card-actions>
                           <v-btn
-                            @click="openProfile(friend.user.username)"
+                          :to="'/profile/' + friend.user.username"
                             prepend-icon="mdi-account"
                             class="mx-5"
                           >
@@ -429,6 +431,24 @@ export default {
         .then((response) => {
           this.user = response.data.data;
           this.is_loading = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deletePost: function (id) {
+      Axios.delete("/user/post/delete/" + id)
+        .then(() => {
+          this.GetUserInfos();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    AcceptFriends: function (id) {
+      Axios.put("user/friend/accept" + id)
+        .then(() => {
+          this.GetUserInfos();
         })
         .catch((error) => {
           console.log(error);
