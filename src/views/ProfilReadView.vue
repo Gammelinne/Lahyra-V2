@@ -208,6 +208,17 @@ export default {
       this.$router.push("/profil/" + username);
       window.scrollTo(0, 0);
     },
+    inviteFriend() {
+      Axios.post("user/friend/invite", {
+        username: this.user.username,
+      })
+        .then(() => {
+          this.user.is_friend_request = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     getUser() {
       console.log(this.$route.params.id);
       Axios.get("user/user/username", {

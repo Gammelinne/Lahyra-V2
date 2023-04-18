@@ -89,6 +89,7 @@ export default {
           if (error.response.status === 422) {
             this.error = true;
           }
+          console.log(error);
         });
     },
   },

@@ -22,7 +22,11 @@
           >
             <img :src="post.user.avatar">
           </v-avatar>
-          <span class="headline">{{ post.user.name }}</span>
+          <span class="headline">
+            <router-link :to="'/profil/' + post.user.username">
+            {{ post.user.name }}
+            </router-link>
+            </span>
           <v-spacer></v-spacer>
           <!-- dropdown menu -->
           <v-menu
